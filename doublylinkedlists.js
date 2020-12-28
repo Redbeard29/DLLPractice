@@ -129,6 +129,44 @@ class DoublyLinkedList{
             return true;
         }
     }
+    remove(index){
+        if(index < 0 || index >= this.length){
+            return false;
+        }
+        if(index === 0){
+            return this.shift();
+        }
+        if(index === this.length - 1){
+            return this.pop();
+        }
+        else{
+            var removedNode = this.get(index);
+            var preIDX = removedNode.prev;
+            var postIDX = removedNode.next;
+
+            preIDX.next = postIDX;
+            postIDX.prev = preIDX;
+            removedNode.next = null;
+            removedNode.prev = null;
+
+            this.length --;
+            return removedNode;
+        }
+    }
+    reverse(){
+        var current = this.head;
+        this.head = this.tail;
+        this.tail = current;
+        var prev = null;
+        var next = null;
+        for(var x = 0; x < this.length; x++){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return this;
+    }
 }
 
 var list = new DoublyLinkedList();
@@ -138,7 +176,5 @@ list.push("Ron");
 list.push("Hermione");
 list.push("Hagrid");
 list.push("Dumbledore");
-list.insert(1, "Tonks");
 
-
-console.log(list.get(1));
+console.log(list);
